@@ -16,7 +16,7 @@ void ofApp::setup(){
 //--------------------------------------------------------------
 void ofApp::update(){
 	radius = abs(ofGetMouseX() - ofGetWidth() / 2);
-	resolution = ofMap(ofGetMouseY(), 0, ofGetHeight(), 3, 8);
+	resolution = ofMap(abs(ofGetMouseY()), 0, ofGetHeight(), 3, 8);
 	rotate = 2 * PI / resolution;
 }
 
