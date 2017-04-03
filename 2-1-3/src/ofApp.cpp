@@ -2,6 +2,14 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
+	ofBackground(0);
+	ofSetFrameRate(10);
+	ofNoFill();
+
+	tileWidth = 100;
+	tileHeight = 100;
+	tileCountX = 10;
+	tileCountY = 10;
 
 }
 
@@ -12,7 +20,28 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
+	int circleCount = ofGetMouseX() / 30 + 1;
+	float endSize = ofMap(ofGetMouseX(), 0, ofGetWidth(), tileCountX / 2.0, 0);
+	float endOffset = ofMap(ofGetMouseY(), 0, ofGetHeight(), 0, (tileWidth - endSize) / 2);
 
+	for (int gridY = 0; gridY <= tileCountY; gridY++) {
+		for(int gridX = 0; gridX <= tileCountX; gridX++) {
+			ofPushMatrix();
+				ofTranslate(tileWidth*gridX, tileHeight*gridY);
+				ofScale(1, tileHeight / tileWidth);
+
+				int toggle = (int)ofRandom(4);
+				ofRotate(toggle*90);
+
+				for (int i = 0; i < circleCount; i++) {
+					float diameter = ofMap(i, 0, circleCount - 1, tileWidth, endSize);
+					float offset = ofMap(i, 0, circleCount - 1, 0, endOffset);
+					ofEllipse(offset, 0, diameter, diameter);
+				}
+
+			ofPopMatrix();
+		}
+	}
 }
 
 //--------------------------------------------------------------
