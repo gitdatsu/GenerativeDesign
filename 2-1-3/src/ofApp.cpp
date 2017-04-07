@@ -3,13 +3,19 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
 	ofBackground(0);
-	ofSetFrameRate(10);
+	ofSetFrameRate(60);
 	ofNoFill();
 
 	tileWidth = 100;
 	tileHeight = 100;
 	tileCountX = 10;
 	tileCountY = 10;
+
+	tileNum = tileCountX*tileCountY;
+	delete[] toggle;
+	toggle = new int[tileNum];
+
+	changeToggle();
 
 }
 
@@ -20,9 +26,12 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-	int circleCount = ofGetMouseX() / 30 + 1;
+	int circleCount = ofMap(ofGetMouseX(), 0, ofGetWidth(), 1, 10);
+	if (circleCount == 1)changeToggle();
+
 	float endSize = ofMap(ofGetMouseX(), 0, ofGetWidth(), tileCountX / 2.0, 0);
-	float endOffset = ofMap(ofGetMouseY(), 0, ofGetHeight(), 0, (tileWidth - endSize) / 2);
+	float endOffset = ofMap(ofGetMouseY(), 0, ofGetHeight(), 0, (tileWidth - endSize) / 2.0);
+	if (endOffset < (tileWidth-endSize)/2.0/20.0)changeToggle();
 
 	for (int gridY = 0; gridY <= tileCountY; gridY++) {
 		for(int gridX = 0; gridX <= tileCountX; gridX++) {
@@ -30,8 +39,7 @@ void ofApp::draw(){
 				ofTranslate(tileWidth*gridX, tileHeight*gridY);
 				ofScale(1, tileHeight / tileWidth);
 
-				int toggle = (int)ofRandom(4);
-				ofRotate(toggle*90);
+				ofRotate(toggle[gridY*tileCountX+gridX] * 90);
 
 				for (int i = 0; i < circleCount; i++) {
 					float diameter = ofMap(i, 0, circleCount - 1, tileWidth, endSize);
@@ -41,6 +49,12 @@ void ofApp::draw(){
 
 			ofPopMatrix();
 		}
+	}
+}
+
+void ofApp::changeToggle() {
+	for (int i = 0; i < tileNum; i++) {
+		toggle[i] = (int)ofRandom(4);
 	}
 }
 

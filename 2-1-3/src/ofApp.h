@@ -21,7 +21,12 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
 
+		void changeToggle();
+
 		float tileWidth, tileHeight;
-	int tileCountX, tileCountY;
+		int tileCountX, tileCountY;
+		int tileNum;
+
+		int *toggle;
 		
 };
