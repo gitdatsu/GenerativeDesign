@@ -22,11 +22,12 @@ class ofApp : public ofBaseApp{
 		void gotMessage(ofMessage msg);
 
 		void changeToggle();
-
+		void drawModule(int num);
 		float tileWidth, tileHeight;
 		int tileCountX, tileCountY;
 		int tileNum;
 
 		int *toggle;
 		
+		int moduleNum;
 };
