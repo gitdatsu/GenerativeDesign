@@ -28,6 +28,8 @@ class ofApp : public ofBaseApp{
 		int imgW, imgH,windowW,windowH;
 		int resolution;
 		ofColor *colors;
+		int *nums;
 		int colors_length;
 		int mode;
+		bool imgDrawing;
 };

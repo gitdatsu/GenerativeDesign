@@ -5,6 +5,7 @@ void ofApp::setup(){
 	ofSetWindowShape(800, 400);
 	ofSetFrameRate(60);
 	ofBackground(0);
+	ofEnableAlphaBlending();
 
 	//color width for gui
 	ofFloatColor initColor = ofFloatColor(0.5, 0.5, 0.5);
@@ -15,7 +16,7 @@ void ofApp::setup(){
 	gui.setup();
 	gui.add(color1.setup("colorLeft",initColor,minColor,maxColor));
 	gui.add(color2.setup("colorRight", initColor, minColor, maxColor));
-	gui.add(resolution.setup("resolution", 8, 2, 32));
+	gui.add(resolution.setup("resolution", 8, 2, 64));
 
 	guishow = true;
 }
@@ -56,10 +57,6 @@ void ofApp::draw(){
 		ofSetColor(c);
 		ofRect(100 + w*i, 200, w, 100);
 	}
-
-	//ofSetDrawBitmapMode();
-	//ofDrawBitmapString("RGB",0,0);
-	//ofDrawBitmapString("HSB",0,0);
 
 	if(guishow) gui.draw();
 }

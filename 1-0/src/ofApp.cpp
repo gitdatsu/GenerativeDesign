@@ -5,9 +5,12 @@ void ofApp::setup(){
 	ofSetWindowShape(720, 720);
 	ofHideCursor();
 	ofSetRectMode(OF_RECTMODE_CENTER);
+	ofSetCircleResolution(64);
 
 	w = ofGetWidth();
 	h = ofGetHeight();
+
+	mode = 0;
 }
 
 //--------------------------------------------------------------
@@ -29,7 +32,12 @@ void ofApp::draw(){
 	c.setHsb(hue, 1.0, 1.0);
 	ofSetColor(c);
 	int mousex = ofGetMouseX();
-	ofRect(w / 2, h / 2, mousex, mousex);
+	if (mode == 0) {
+		ofRect(w / 2, h / 2, mousex, mousex);
+	}
+	else if (mode == 1) {
+		ofDrawCircle(w / 2, h / 2, mousex/2);
+	}
 
 	//info
 	string info;
@@ -41,7 +49,7 @@ void ofApp::draw(){
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-
+	if('0'<=key&&key<='9') mode = key - '0';
 }
 
 //--------------------------------------------------------------

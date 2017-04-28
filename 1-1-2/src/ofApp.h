@@ -35,4 +35,5 @@ class ofApp : public ofBaseApp{
 		ofxIntSlider resolution;
 		ofxFloatSlider radius;
 		
+		ofImage img;
 };

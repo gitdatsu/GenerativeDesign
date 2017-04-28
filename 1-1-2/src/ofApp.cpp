@@ -9,7 +9,6 @@ void ofApp::setup(){
 	gui.add(mode.setup("mode", 0, 0, 1));
 	gui.add(resolution.setup("resolution", 12, 3, 64));
 	gui.add(radius.setup("radius", 200.0, 10.0, WIDTH));
-
 }
 
 //--------------------------------------------------------------
@@ -58,7 +57,22 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
+
+	ofSetColor(255);
 	mesh.draw();
+
+	img.grabScreen(0,0,ofGetWidth(),ofGetHeight());
+
+	ofBackground(0);
+	img.draw(0, 0);
+
+	ofColor color = img.getColor(ofGetMouseX(),ofGetMouseY());// [index];
+	ofSetColor(color);
+	ofDrawRectangle(0, ofGetHeight()-50, 50, 50);
+	
+	string strColor = "r:" + ofToString((int)color.r) + ",g:" + ofToString((int)color.g) + ",b:" + ofToString((int)color.b);
+	ofSetColor(255);
+	ofDrawBitmapString(strColor, 60, ofGetHeight() - 10);
 
 	gui.draw();
 }

@@ -15,8 +15,10 @@ void ofApp::setup(){
 	resolution = 64;
 	colors_length = windowW / resolution * windowH / resolution;
 	colors = new ofColor[colors_length]();
+	nums = new int[colors_length]();
 
 	mode = -1;
+	imgDrawing = true;
 }
 
 //--------------------------------------------------------------
@@ -27,43 +29,57 @@ void ofApp::update(){
 //--------------------------------------------------------------
 void ofApp::draw(){
 	ofSetColor(255);
-	img.draw(0, 0, windowW, windowH);
-	img.grabScreen(0,0,windowW,windowH);
-	ofPixels pixels = img.getPixels();
 	int count = 0;
-	for (int i = 0; i < windowW; i += resolution) {
-		for (int j = 0; j < windowH; j += resolution) {
-			ofColor color = pixels.getColor(i, j);
-			colors[count] = color;
-			count++;
+	if (imgDrawing) {
+		img.draw(0, 0, windowW, windowH);
+
+		img.grabScreen(0, 0, windowW, windowH);
+		ofPixels pixels = img.getPixels();
+
+		for (int i = 0; i < windowW; i += resolution) {
+			for (int j = 0; j < windowH; j += resolution) {
+				img.getColor(i, j);
+				ofColor color = pixels.getColor(i, j);
+				colors[count] = color;
+				count++;
+			}
+		}
+
+		for (int i = 0; i < colors_length; i++) {
+			nums[i] = i + 1;
 		}
 	}
+
 	sortColor(mode);
+
 	count = 0;
 	for (int i = 0; i < windowW; i += resolution) {
 		for (int j = 0; j < windowH; j += resolution) {
 			ofColor c;
+			
 			switch (mode) {
-			case 0:
+			case 0://hue
 				c.setHsb(colors[count].getHue(), 255, 255);
 				break;
-			case 1:
+			case 1://saturation
 				c.setHsb(colors[count].getHue(), colors[count].getSaturation(), 255);
 				break;
-			case 2:
+			case 2://brightness
 				c.setHsb(colors[count].getHue(), 255, colors[count].getBrightness());
 				break;
 			default:
 				c = colors[count];
 				break;
 			}
+
 			ofSetColor(c);
-			count++;
 			ofRect(i, j, resolution, resolution);
 			
 			ofSetColor(0);
-			string str = ofToString(count);
+			string str = ofToString(nums[count]);
 			ofDrawBitmapString(str,i+resolution/2,j+resolution/2);
+
+			count++;
 		}
 	}
 }
@@ -82,6 +98,11 @@ void ofApp::sortColor(int mode) {
 					ofColor c = colors[j];
 					colors[j] = colors[j + 1];
 					colors[j + 1] = c;
+
+					int n = nums[j];
+					nums[j] = nums[j + 1];
+					nums[j + 1] = n;
+
 					finish = false;
 				}
 			}
@@ -97,6 +118,11 @@ void ofApp::sortColor(int mode) {
 					ofColor c = colors[j];
 					colors[j] = colors[j + 1];
 					colors[j + 1] = c;
+
+					int n = nums[j];
+					nums[j] = nums[j + 1];
+					nums[j + 1] = n;
+
 					finish = false;
 				}
 			}
@@ -111,6 +137,11 @@ void ofApp::sortColor(int mode) {
 					ofColor c = colors[j];
 					colors[j] = colors[j + 1];
 					colors[j + 1] = c;
+
+					int n = nums[j];
+					nums[j] = nums[j + 1];
+					nums[j + 1] = n;
+
 					finish = false;
 				}
 			}
@@ -122,7 +153,8 @@ void ofApp::sortColor(int mode) {
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-
+	if ('0' <= key&&key <= '9') mode = key - '0';
+	if (key == ' ')imgDrawing = !imgDrawing;
 }
 
 //--------------------------------------------------------------

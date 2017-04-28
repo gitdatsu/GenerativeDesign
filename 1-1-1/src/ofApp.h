@@ -30,4 +30,6 @@ class ofApp : public ofBaseApp{
 		ofxPanel gui;
 		ofxIntSlider step;
 		ofxFloatSlider brightness;
+
+		ofFbo fbo;
 };
